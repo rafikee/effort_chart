@@ -1,3 +1,9 @@
+table
+{
+    table-layout: fixed;
+    width: 100px;
+    background-color: Lavender;
+}
 .disable-select {
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
@@ -13,9 +19,6 @@
 }
 
 .tg td {
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
   font-family: Arial, sans-serif;
   font-size: 14px;
   overflow: hidden;
@@ -24,9 +27,6 @@
 }
 
 .tg th {
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
   font-family: Arial, sans-serif;
   font-size: 14px;
   font-weight: normal;
@@ -37,16 +37,32 @@
 
 .tg .tg-baqh {
   text-align: center;
-  vertical-align: top
+  vertical-align: top;
 }
 
-.tg .tg-0lax {
+.tg .tg-stat {
   text-align: left;
-  vertical-align: top
+  vertical-align: top;
+  width: 50px;
+  background-color: CornflowerBlue;
+}
+
+.tg .tg-plyr {
+  width: 30px;
+  height: 30px;
+  background-color: lightGray;
+}
+
+.tg .first-cell {
+  width: 20px;
+  background-color: grey;
 }
 
 .stat-button {
   width: 100%;
+  background-color: yellow;
+  font-size: 24px;
+  border: none;
 }
 
 .image {

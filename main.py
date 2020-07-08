@@ -12,7 +12,7 @@ def hello():
     df = pd.read_csv('chart_input.csv', dtype=object)
     stats = list(df['stats'].dropna())
     cols = stats.copy()
-    cols.insert(0, ' ')
+    #cols.insert(0, ' ')
     players = ['#' + player for player in list(df['players'].dropna())]
     return render_template('chart.html', plyrs=players, cols=cols, stats=stats)
 
