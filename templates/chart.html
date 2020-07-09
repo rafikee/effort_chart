@@ -12,30 +12,26 @@
 </head>
 
 <body>
-  <div>
-    <table class="tg">
-      <thead>
-        <tr>
-          <th class="first-cell"></th>
-          {% for col in cols %}
-          <th class="tg-stat">{{ col }}</th>
-          {% endfor %}
-        </tr>
-      </thead>
-      <tbody>
-        {% for plyr in plyrs %}
-        <tr>
-          <td class="tg-plyr">{{ plyr }}</td>
-          {% for stat in stats %}
-          <td><button class="stat-button disable-select" id='{{ plyr }}{{ stat }}'>0</button></td>
-          {% endfor %}
-        </tr>
+  <table class="tg">
+    <thead>
+      <tr>
+        <th class="first-cell"></th>
+        {% for col in cols %}
+        <th class="tg-stat">{{ col }}</th>
         {% endfor %}
-      </tbody>
-    </table>
-    <img src="/static/minus.png" id="minus" class="image" alt="MINUS">
-    <img src="/static/plus.png" id="plus" class="image" alt="ADDED">
-  </div>
+      </tr>
+    </thead>
+    <tbody>
+      {% for plyr in plyrs %}
+      <tr>
+        <td class="tg-plyr">{{ plyr }}</td>
+        {% for stat in stats %}
+        <td><button class="stat-button disable-select" id='{{ plyr }}{{ stat }}'>0</button></td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </body>
 
 </html>

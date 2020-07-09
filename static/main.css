@@ -63,13 +63,5 @@ table
   background-color: yellow;
   font-size: 24px;
   border: none;
-}
-
-.image {
-  display: none;
-  position: absolute;
-  left: 250px;
-  top: 250px;
-  width: 100px;
-  height: 80px;
+  transition: background-color ease-in .1s;
 }
