@@ -10,30 +10,23 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
-<ul>
-  <li><a href="{{ url_for('wtf') }}">Add</a></li>
-  <li><a href="{{ url_for('remove') }}">Remove</a></li>
-</ul>
+
+Add a category!
+<form method="POST">
+  <input name="text">
+  <input type="submit">
+</form>
+
 <body>
+  Click on a category to delete it!
   <table class="tg">
     <thead>
+      {% for stat in stats %}
       <tr>
-        <th class="first-cell"></th>
-        {% for stat in stats %}
         <th class="tg-stat">{{ stat }}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for plyr in plyrs %}
-      <tr>
-        <td class="tg-plyr">{{ plyr }}</td>
-        {% for stat in stats %}
-        <td><button class="stat-button disable-select" id='{{ plyr }}{{ stat }}'>0</button></td>
-        {% endfor %}
       </tr>
       {% endfor %}
-    </tbody>
+    </thead>
   </table>
 </body>
 

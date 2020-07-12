@@ -1,0 +1,16 @@
+{% block content %}
+<div class="formwrapper">
+  <h4>Add a category</h4>
+  <form method="POST" action="/wtf">
+    <div class="form-field">{{ form.category(size=20) }} {{ form.submit }}</div>
+    {{ form.csrf_token }}
+  </form>
+  <table>
+    {% for stat in stats %}
+    <tr>
+      <th class="tg-stat">{{ stat }}</th>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

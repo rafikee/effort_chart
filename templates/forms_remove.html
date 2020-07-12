@@ -1,0 +1,10 @@
+{% block content %}
+<div class="formwrapper">
+  <h4>Remove a category</h4>
+  <form method="POST" action="/remove">
+    <div class="form-field">{{ form.stats }}</div>
+    {{ form.submit_remove }}
+    {{ form.csrf_token }}
+  </form>
+</div>
+{% endblock %}
