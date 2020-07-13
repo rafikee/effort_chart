@@ -1,10 +1,11 @@
+{% extends 'base.html' %}
 {% block content %}
-<div class="formwrapper">
+<body>
   <h4>Remove a category</h4>
   <form method="POST" action="/remove">
-    <div class="form-field">{{ form.stats }}</div>
+    {{ form.stats }}
     {{ form.submit_remove }}
     {{ form.csrf_token }}
   </form>
-</div>
+</body>
 {% endblock %}

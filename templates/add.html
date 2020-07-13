@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<body>
+  <h4>Add a category</h4>
+  <form method="POST" action="/add">
+    {{ form.category }} {{ form.submit }}
+    {{ form.csrf_token }}
+  </form>
+</body>
+{% endblock %}

@@ -11,26 +11,8 @@ from forms import StatsForm, StatsDD
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'blabla'
 
-@app.route('/form')
-def my_form():
-    check_fire_db() # initialize the firebase app
-    db = firestore.client() # get the db object
-    chart_ref = db.collection('charts').document('test') # get the chart object
-    chart = chart_ref.get().to_dict() # get it as dict
-    stats = chart['stats']
-    return render_template('form.html', stats=stats)
-
-@app.route('/form', methods=['POST'])
-def my_form_post():
-    check_fire_db() # initialize the firebase app
-    db = firestore.client() # get the db object
-    text = request.form['text']
-    chart_ref = db.collection('charts').document('test') # get the chart object
-    chart_ref.update({'stats': firestore.ArrayUnion([text])})
-    return redirect(url_for('fire'))
-
-@app.route('/wtf', methods=('GET', 'POST'))
-def wtf():
+@app.route('/add', methods=('GET', 'POST'))
+def add():
     form = StatsForm()
     check_fire_db() # initialize the firebase app
     db = firestore.client() # get the db object
@@ -38,10 +20,10 @@ def wtf():
     if form.is_submitted():
         result = form.category.data
         chart_ref.update({'stats': firestore.ArrayUnion([result])})
-        return redirect(url_for('fire'))
+        return redirect(url_for('chart'))
     chart = chart_ref.get().to_dict() # get it as dict
     stats = chart['stats']
-    return render_template('forms.html', form=form, stats=stats)
+    return render_template('add.html', form=form, stats=stats)
 
 @app.route('/remove', methods=('GET', 'POST'))
 def remove():
@@ -55,12 +37,12 @@ def remove():
     if form.is_submitted():
         result = form.stats.data
         chart_ref.update({'stats': firestore.ArrayRemove([result])})
-        return redirect(url_for('fire'))
-    return render_template('forms_remove.html', form=form)
+        return redirect(url_for('chart'))
+    return render_template('remove.html', form=form)
 
 # firebase
 @app.route('/', methods=['GET', 'POST'])
-def fire():
+def chart():
     check_fire_db() # initialize the firebase app
     db = firestore.client() # get the db object
     chart_ref = db.collection('charts').document('test') # get the chart object
@@ -79,11 +61,6 @@ def check_fire_db():
         else:
             firebase_admin.initialize_app()
     return
-
-# test
-@app.route('/test', methods=['GET'])
-def test():
-    return 'test'
 
 # local json
 @app.route('/old', methods=['GET'])
