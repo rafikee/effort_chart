@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <title>Effot Chart</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.js') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  </head>
+
+<head>
+  <title>Effot Chart</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='ww.ico') }}">
+</head>
+<div class="container">
   <nav class="topnav">
     <a href="{{ url_for('chart') }}">Chart</a>
     <a href="{{ url_for('add') }}">Add</a>
     <a href="{{ url_for('remove') }}">Remove</a>
   </nav>
-  <div>
-    {% block content %}{% endblock %}
-  </dbiv>
+  {% block content %}{% endblock %}
 </html>

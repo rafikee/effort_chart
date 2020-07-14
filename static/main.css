@@ -1,8 +1,11 @@
 table
 {
     table-layout: fixed;
-    width: 100px;
+    width: 100%;
     background-color: Lavender;
+}
+.container{
+  width: 600px;
 }
 .disable-select {
     -webkit-touch-callout: none; /* iOS Safari */
@@ -69,7 +72,6 @@ table
 .topnav {
   overflow: hidden;
   background-color: #333;
-  width: 500px;
 }
 
 .topnav a {
