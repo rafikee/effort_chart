@@ -7,12 +7,20 @@
   <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
   <link rel="shortcut icon" href="{{ url_for('static', filename='ww.ico') }}">
+  <!--IOS Progressive Web App-->
+  <link rel="apple-touch-icon" sizes="128x128" href="{{ url_for('static', filename='ww.ico') }}">
+  <meta name="apple-mobile-web-app-title" content="Effort Chart">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
 </head>
 <div class="container">
   <nav class="topnav">
     <a href="{{ url_for('chart') }}">Chart</a>
     <a href="{{ url_for('add') }}">Add</a>
     <a href="{{ url_for('remove') }}">Remove</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    {% block subtract %}{% endblock %}
   </nav>
   {% block content %}{% endblock %}
+
 </html>

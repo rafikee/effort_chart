@@ -1,11 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextField, SubmitField, SelectField
-from wtforms.validators import DataRequired, Length
+from wtforms import Form, PasswordField, StringField, SubmitField, SelectField
 
 class StatsForm(FlaskForm):
     category = StringField('Category')
-    submit = SubmitField('Submit')
+    submit = SubmitField('Add')
 
 class StatsDD(FlaskForm):
     stats = SelectField('Stats')
-    submit_remove = SubmitField('Submit')
+    submit = SubmitField('Remove')
+
+class LoginForm(Form):
+    email = StringField('Email Address')
+    password = PasswordField('New Password')
+    submit = SubmitField('Login')

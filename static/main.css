@@ -2,7 +2,7 @@ table
 {
     table-layout: fixed;
     width: 100%;
-    background-color: Lavender;
+    background-color: #f8f7ff;
 }
 .container{
   width: 600px;
@@ -38,40 +38,51 @@ table
   word-break: normal;
 }
 
-.tg .tg-baqh {
+.tg .tg-stat {
   text-align: center;
   vertical-align: top;
-}
-
-.tg .tg-stat {
-  text-align: left;
-  vertical-align: top;
   width: 50px;
-  background-color: CornflowerBlue;
+  background-color: #d5d0f5;
 }
 
 .tg .tg-plyr {
-  width: 30px;
   height: 30px;
-  background-color: lightGray;
+  text-align: center;
+  background-color: #d5d0f5;
 }
 
 .tg .first-cell {
-  width: 20px;
-  background-color: grey;
+  width: 10px;
+  background-color: #d5d0f5;
 }
 
 .stat-button {
   width: 100%;
-  background-color: yellow;
-  font-size: 24px;
-  border: none;
+  font-size: 20px;
+  border: .5px solid black;
+  background-color: #f8f7ff;
+  border-radius: 10px;
+  transition: background-color ease-in .1s;
+}
+
+.stat-button:hover {
+  background-color: #d5d0f5;
+  color: white;
+}
+
+#addSub {
+  float: right;
+  font-size: 30px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  background-color: green;
   transition: background-color ease-in .1s;
 }
 
 .topnav {
   overflow: hidden;
-  background-color: #333;
+  background-color: blue;
 }
 
 .topnav a {

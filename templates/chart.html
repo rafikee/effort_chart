@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block subtract %}
+<button id='addSub'>+</button>
+{% endblock %}
 {% block content %}
 <table class="tg">
   <thead>
@@ -13,7 +16,7 @@
     {% for plyr in plyrs %}
     <tr>
       <td class="tg-plyr disable-select">{{ plyr }}</td>
-      {% for stat in stats %}
+      {% for stat in stats_print %}
       <td><button class="stat-button disable-select" id='{{ plyr }}{{ stat }}'>0</button></td>
       {% endfor %}
     </tr>
