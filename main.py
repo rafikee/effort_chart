@@ -6,6 +6,7 @@ from firebase_admin import credentials, firestore
 import os
 from forms import StatsForm, StatsDD, LoginForm
 import flask_login
+from flask_login import current_user, login_user, LoginManager, UserMixin
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
 # called `app` in `main.py`.
@@ -13,24 +14,27 @@ app = Flask(__name__)
 
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
-
-login_manager = flask_login.LoginManager()
-login_manager.init_app(app)
-
+login = LoginManager(app)
 firebase = pyrebase.initialize_app(json.load(open('fbconfig.json')))
 
-class User(flask_login.UserMixin):
+class User(UserMixin):
     pass
 
-@login_manager.user_loader
+@login.user_loader
 def user_loader(email):
     user = User()
     user.id = email
     return user
 
+@app.route('/', methods=['GET'])
+def index():
+    return redirect(url_for('login'))
+
 # Update this so it displays errors in html on the page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('chart'))
     auth = firebase.auth()
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -38,9 +42,9 @@ def login():
         password = form.password.data
         try:
             login = auth.sign_in_with_email_and_password(email, password)
-            user = User();
-            user.id = email;
-            flask_login.login_user(user)
+            user = User()
+            user.id = email
+            login_user(user)
             return redirect(url_for('chart'))
         except:
             return render_template('login.html', form=form)
@@ -49,7 +53,7 @@ def login():
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
-    return 'Logged out'
+    return redirect(url_for('login'))
 
 @app.route('/add', methods=('GET', 'POST'))
 @flask_login.login_required
