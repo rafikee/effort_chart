@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 import os
 from forms import StatsForm, StatsDD, LoginForm
 import flask_login
-from flask_login import current_user, login_user, LoginManager, UserMixin
+from flask_login import current_user, login_user, LoginManager, UserMixin, login_required
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
 # called `app` in `main.py`.
@@ -25,6 +25,10 @@ def user_loader(email):
     user = User()
     user.id = email
     return user
+
+@login.unauthorized_handler
+def unauthorized_callback():
+    return redirect(url_for('login'))
 
 @app.route('/', methods=['GET'])
 def index():
@@ -56,7 +60,7 @@ def logout():
     return redirect(url_for('login'))
 
 @app.route('/add', methods=('GET', 'POST'))
-@flask_login.login_required
+@login_required
 def add():
     form = StatsForm()
     check_fire_db() # initialize the firebase app
@@ -71,7 +75,7 @@ def add():
     return render_template('add.html', form=form, stats=stats)
 
 @app.route('/remove', methods=('GET', 'POST'))
-@flask_login.login_required
+@login_required
 def remove():
     form = StatsDD()
     check_fire_db() # initialize the firebase app
@@ -87,7 +91,7 @@ def remove():
     return render_template('remove.html', form=form)
 
 @app.route('/chart', methods=['GET', 'POST'])
-@flask_login.login_required
+@login_required
 def chart():
     check_fire_db() # initialize the firebase app
     db = firestore.client() # get the db object
