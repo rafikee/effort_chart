@@ -63,9 +63,7 @@ def logout():
 @login_required
 def add():
     form = StatsForm()
-    check_fire_db() # initialize the firebase app
-    db = firestore.client() # get the db object
-    chart_ref = db.collection('charts').document('test') # get the chart object
+    chart_ref = db.collection('charts').document(current_user.id) # get the chart object
     if form.is_submitted():
         result = form.category.data
         chart_ref.update({'stats': firestore.ArrayUnion([result])})
@@ -78,10 +76,8 @@ def add():
 @login_required
 def remove():
     form = StatsDD()
-    check_fire_db() # initialize the firebase app
-    db = firestore.client() # get the db object
-    chart_ref = db.collection('charts').document('test') # get the chart object
-    chart = chart_ref.get().to_dict() # get it as dict
+    chart_ref = db.collection('charts').document(current_user.id) # get the chart object
+    chart = chart_ref.get().to_dict() # get it as dictrp
     stats = chart['stats']
     form.stats.choices = stats
     if form.is_submitted():
@@ -93,11 +89,11 @@ def remove():
 @app.route('/chart', methods=['GET', 'POST'])
 @login_required
 def chart():
-    check_fire_db() # initialize the firebase app
-    db = firestore.client() # get the db object
-    chart_ref = db.collection('charts').document('test') # get the chart object
-    chart = chart_ref.get().to_dict() # get it as dict
-
+    chart_ref = db.collection('charts').document(current_user.id).get() # get the chart object
+    if not chart_ref.exists:
+        create_chart(current_user.id)
+        chart_ref = db.collection('charts').document(current_user.id).get()
+    chart = chart_ref.to_dict() # get it as dict
     stats = chart['stats']
     players = chart['players']
     stats_print = []
@@ -114,6 +110,18 @@ def check_fire_db():
         else:
             firebase_admin.initialize_app()
     return
+
+def create_chart(id):
+    data = {
+        'stats': ['Category 1'],
+        'players': ['1', '2', '3', '4', '5', '10', '11', '12', '15', '20'],
+        }
+    db.collection('charts').document(id).set(data) # get the chart object
+    return
+
+# these need to happen after all the functions
+check_fire_db() # initialize the firebase app
+db = firestore.client() # get the db objects
 
 if __name__ == '__main__':
     app.run(host='localhost', port=8080, debug=True)

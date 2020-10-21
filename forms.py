@@ -10,6 +10,6 @@ class StatsDD(FlaskForm):
     submit = SubmitField('Remove')
 
 class LoginForm(Form):
-    email = StringField('Email Address')
-    password = PasswordField('New Password')
+    email = StringField('Email')
+    password = PasswordField('Passw')
     submit = SubmitField('Login')

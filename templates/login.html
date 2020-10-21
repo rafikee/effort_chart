@@ -1,8 +1,10 @@
+{% from "_formhelpers.html" import render_field %}
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+</head>
 <h4>Login</h4>
 <form method="POST" action="/login">
-  <dl>
-    Email {{ form.email }}
-    Password {{ form.password }}
-    {{ form.submit }}
-  </dl>
+    {{ render_field(form.email, class='loginfld') }}
+    {{ render_field(form.password, class='loginfld') }}
+    {{ render_field(form.submit, class='loginbtn') }}
 </form>
