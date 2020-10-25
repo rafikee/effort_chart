@@ -1,40 +1,49 @@
 $(document).ready(function() {
 
+  //reset the undo array
+  localStorage.removeItem('actionsList')
+  localStorage.removeItem('operationList')
+
   $(".stat-button").mousedown(function(event) {
-
-    var numb = 1;
-    var background = '#008000';
-    var operation = $('#addSub').text();
-    if (operation != '+') {
-      var numb = -1;
-      var background = '#FF0000';
-    }
-
-    var buttonText = $(this).text();
     switch (event.which) {
       case 1:
-        buttonText = parseInt(buttonText, 10) + numb;
-        $(this).css({
-          backgroundColor: background
-        });
+        if ($('#addSub').text() == '+') {
+          addsub(this, 1);
+        }
+        else {
+          addsub(this, -1);
+        }
         break;
 
       case 3:
-        buttonText = parseInt(buttonText, 10) - 1;
-        $(this).css({
-          backgroundColor: '#FF0000'
-        });
+        addsub(this, -1);
         break;
     }
-    var that = this;
-    setTimeout(function() {
-      $(that).removeAttr('style');
-    }, 250);
-    $(this).text(buttonText);
 
-    //begin logic for undo, store these in an array
-    lastId = $(this).attr('id');
-    //console.log($('#' + lastId));
+    //Undo Logic
+    var lastId = $(this).attr('id');
+    a = '#' + lastId;
+    var arr = JSON.parse(localStorage.getItem('actionsList'));
+    var ops = JSON.parse(localStorage.getItem('operationList'));
+    if (arr == null) {
+      var arr = [];
+    }
+    if (ops == null) {
+      var ops = [];
+    }
+    arr.push(a);
+    ops.push($('#addSub').text());
+
+    if (arr.length >= 10) {
+      arr.shift();
+    }
+    if (ops.length >= 10) {
+      ops.shift();
+    }
+    arr = JSON.stringify(arr);
+    ops = JSON.stringify(ops);
+    localStorage.setItem('operationList',ops);
+    localStorage.setItem('actionsList',arr);
   });
 
   $(".stat-button").bind("contextmenu", function(e) {
@@ -57,4 +66,34 @@ $(document).ready(function() {
     }
   });
 
+  $("#undo").mousedown(function(event) {
+    var arr = JSON.parse(localStorage.getItem('actionsList'));
+    var ops = JSON.parse(localStorage.getItem('operationList'));
+
+    btn = arr[arr.length-1]
+    op = ops[ops.length-1]
+
+
+    if (op == '+') {
+      // something with this $(btn)
+    }
+    else {
+    }
+  });
+
 });
+
+function addsub(btn, numb) {
+    var buttonText = $(btn).text();
+    buttonText = parseInt(buttonText, 10) + numb;
+
+    color = '#008000'; // green for +1
+    if (numb < 0) color = '#FF0000'; // red for -1
+    $(btn).css({
+      backgroundColor: color
+    });
+    setTimeout(function() {
+      $(btn).removeAttr('style');
+    }, 250);
+    $(btn).text(buttonText);
+}

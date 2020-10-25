@@ -70,7 +70,7 @@ table
   color: white;
 }
 
-#addSub {
+.toolBtn {
   float: right;
   font-size: 30px;
   width: 50px;
