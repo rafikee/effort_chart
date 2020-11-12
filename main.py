@@ -18,12 +18,14 @@ login = LoginManager(app)
 firebase = pyrebase.initialize_app(json.load(open('fbconfig.json')))
 
 class User(UserMixin):
-    pass
+    def get_brand(self):
+        return text_type(self.brand)
 
 @login.user_loader
 def user_loader(email):
     user = User()
     user.id = email
+    user.brand = db.collection('users').document(user.id).get().to_dict()['brand']
     return user
 
 @login.unauthorized_handler
@@ -49,7 +51,7 @@ def login():
             user = User()
             user.id = email
             login_user(user)
-            return redirect(url_for('chart'))
+            return redirect(url_for('charts'))
         except:
             return render_template('login.html', form=form)
     return render_template('login.html', form=form)
@@ -59,40 +61,37 @@ def logout():
     flask_login.logout_user()
     return redirect(url_for('login'))
 
-@app.route('/add', methods=('GET', 'POST'))
+@app.route('/chart/<chart>/add', methods=('GET', 'POST'))
 @login_required
-def add():
+def add(chart):
     form = StatsForm()
-    chart_ref = db.collection('charts').document(current_user.id) # get the chart object
+    chart_ref = db.collection(current_user.brand).document(chart) # get the chart object
     if form.is_submitted():
         result = form.category.data
         chart_ref.update({'stats': firestore.ArrayUnion([result])})
-        return redirect(url_for('chart'))
+        return redirect(url_for('chart', chart_name=chart))
     chart = chart_ref.get().to_dict() # get it as dict
     stats = chart['stats']
     return render_template('add.html', form=form, stats=stats)
 
-@app.route('/remove', methods=('GET', 'POST'))
+@app.route('/chart/<chart>/remove', methods=('GET', 'POST'))
 @login_required
-def remove():
+def remove(chart):
     form = StatsDD()
-    chart_ref = db.collection('charts').document(current_user.id) # get the chart object
+    chart_ref = db.collection(current_user.brand).document(chart) # get the chart object
     chart = chart_ref.get().to_dict() # get it as dictrp
     stats = chart['stats']
     form.stats.choices = stats
     if form.is_submitted():
         result = form.stats.data
         chart_ref.update({'stats': firestore.ArrayRemove([result])})
-        return redirect(url_for('chart'))
+        return redirect(url_for('chart', chart_name=chart))
     return render_template('remove.html', form=form)
 
-@app.route('/chart', methods=['GET', 'POST'])
+@app.route('/chart/<chart_name>', methods=['GET', 'POST'])
 @login_required
-def chart():
-    chart_ref = db.collection('charts').document(current_user.id).get() # get the chart object
-    if not chart_ref.exists:
-        create_chart(current_user.id)
-        chart_ref = db.collection('charts').document(current_user.id).get()
+def chart(chart_name):
+    chart_ref = db.collection(current_user.brand).document(chart_name).get() # get the chart object
     chart = chart_ref.to_dict() # get it as dict
     stats = chart['stats']
     players = chart['players']
@@ -100,6 +99,24 @@ def chart():
     for stat in stats:
         stats_print.append(stat.replace(" ", "_"))
     return render_template('chart.html', plyrs=players, stats=stats, stats_print=stats_print)
+
+@app.route('/charts', methods=['GET', 'POST'])
+@login_required
+def charts():
+    brand = current_user.brand
+    charts = [chart.id for chart in db.collection(brand).get()]
+    if not charts:
+        create_chart(brand)
+        charts = [chart.id for chart in db.collection(brand).get()]
+    return render_template('charts.html', charts=charts)
+
+def create_chart(brand):
+    data = {
+        'stats': ['Category 1'],
+        'players': ['1', '2', '3', '4', '5', '10', '11', '12', '15', '20'],
+        }
+    db.collection(brand).document('First Chart').set(data) # get the chart object
+    return
 
 # initialize the firebase app
 def check_fire_db():
@@ -109,14 +126,6 @@ def check_fire_db():
             firebase_admin.initialize_app(cred)
         else:
             firebase_admin.initialize_app()
-    return
-
-def create_chart(id):
-    data = {
-        'stats': ['Category 1'],
-        'players': ['1', '2', '3', '4', '5', '10', '11', '12', '15', '20'],
-        }
-    db.collection('charts').document(id).set(data) # get the chart object
     return
 
 # these need to happen after all the functions

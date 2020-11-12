@@ -4,6 +4,12 @@ table
     width: 100%;
     background-color: #f8f7ff;
 }
+
+.chartsList{
+  width: auto;
+  font-size: 30px;
+  padding: 20px;
+}
 .container{
   width: 600px;
 }
@@ -70,7 +76,7 @@ table
   color: white;
 }
 
-.toolBtn {
+#addSub {
   float: right;
   font-size: 30px;
   width: 50px;
@@ -78,6 +84,18 @@ table
   text-align: center;
   background-color: green;
   transition: background-color ease-in .1s;
+}
+
+#undo {
+  float: right;
+  font-size: 30px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  background-color: lightgrey;
+  transition: background-color ease-in .1s;
+  border-color: blue;
+
 }
 
 .topnav {

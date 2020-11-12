@@ -40,10 +40,8 @@ $(document).ready(function() {
     if (ops.length >= 10) {
       ops.shift();
     }
-    arr = JSON.stringify(arr);
-    ops = JSON.stringify(ops);
-    localStorage.setItem('operationList',ops);
-    localStorage.setItem('actionsList',arr);
+    localStorage.setItem('actionsList',JSON.stringify(arr));
+    localStorage.setItem('operationList',JSON.stringify(ops));
   });
 
   $(".stat-button").bind("contextmenu", function(e) {
@@ -73,12 +71,16 @@ $(document).ready(function() {
     btn = arr[arr.length-1]
     op = ops[ops.length-1]
 
-
     if (op == '+') {
-      // something with this $(btn)
+      addsub(btn, -1)
     }
     else {
+      addsub(btn, 1)
     }
+    arr.pop();
+    ops.pop();
+    localStorage.setItem('actionsList',JSON.stringify(arr));
+    localStorage.setItem('operationList',JSON.stringify(ops));
   });
 
 });

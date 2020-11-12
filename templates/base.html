@@ -15,9 +15,9 @@
 </head>
 <div class="container">
   <nav class="topnav">
-    <a href="{{ url_for('chart') }}">Chart</a>
-    <a href="{{ url_for('add') }}">Add</a>
-    <a href="{{ url_for('remove') }}">Remove</a>
+    <a href="{{ url_for('charts') }}">Charts</a>
+    <a href="add/">Add</a>
+    <a href="remove/">Remove</a>
     <a href="{{ url_for('logout') }}">Logout</a>
     {% block subtract %}{% endblock %}
   </nav>

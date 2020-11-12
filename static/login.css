@@ -4,7 +4,7 @@
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
-  font-family: monospace;
+  font-family: arial;
   font-size: 40px;
   width: 550px;
   height: 70px;
@@ -14,7 +14,7 @@
   height: 70px;
   width: 550px;
   font-size: 40px;
-  font-family: monospace;
+  font-family: arial;
 }
 
 form {
@@ -26,13 +26,13 @@ form {
 dd {
     text-align: center;
     margin: 16px;
-    font-family: monospace;
-    font-size: 40px;
+    font-family: arial;
+    font-size: 75px;
 }
 
 h4 {
     text-align: center;
-    font-size: 36px;
-    font-family: monospace;
+    font-size: 75px;
+    font-family: arial;
     padding-top: 20px;
 }
