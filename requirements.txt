@@ -3,3 +3,4 @@ firebase-admin
 Flask-WTF
 flask_login
 pyrebase
+PyJWT==2.1.0
