@@ -10,6 +10,10 @@ export FLASK_APP=path/effort_chart/main.py
 export FLASK_ENV=development
 export FLASK_APP=$HOME/effort_chart/main.py
 
+Add to effort_chart:
+key.json
+fbconfig.json
+
 **Now ready:**
 flask run
 then access here:
