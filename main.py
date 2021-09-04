@@ -40,7 +40,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('chart'))
+        return redirect(url_for('charts'))
     auth = firebase.auth()
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
