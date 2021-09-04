@@ -1,4 +1,7 @@
-Clone the repository into a folder
+### How to setup the Effort Chart locally
+1. Navigate to the parent folder of where you want to run the program
+2. Clone the repo into that folder by running 
+`git clone xxxxxx`
 Create the virtual environment in that folder
 Navigate to where the repo exists and run this:
 python3 -m venv ./venv # Will create a venv called venv
