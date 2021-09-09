@@ -18,6 +18,7 @@
     <a href="{{ url_for('charts') }}">Charts</a>
     <a href="add/">Add</a>
     <a href="remove/">Remove</a>
+    <a href="{{ request.path + '/events' }}">Events</a>
     <a href="{{ url_for('logout') }}">Logout</a>
     {% block subtract %}{% endblock %}
   </nav>

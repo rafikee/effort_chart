@@ -26,11 +26,25 @@ def check_fire_db():
 check_fire_db() # initialize the firebase app
 db = firestore.client() # get the db objects
 
-data = db.collection('charts').document('123').get().to_dict() # get dictionary from document
-db.collection('charts').document().set(data) # create a new doc with auto gen key
+# data = db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').get().to_dict() # get dictionary from document
+# data = db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').document('oaoQzhEc8daB7eFJzyeR').get().to_dict() # get dictionary from document
 
-# Create a reference to the cities collection
 charts = db.collection('charts')
+#q = charts.where('brand', '==', 'vcu').get()
 
-# Create a query against the collection
-q = charts.where('brand', '==', 'vcu')
+
+#charts = [(chart.id, chart.to_dict()['name']) for chart in db.collection('charts').where('brand', '==', brand).get()]
+
+charts.get()['']
+
+new_data = {
+    'name': 'practice 1',
+    'stats' :
+    {
+        'Aaron': {'Deflection': 1, 'Rebound': 5, 'Steal': 3},
+        'Rob': {'Steal': 4, 'Deflection': 3, 'Rebound': 2}
+    }
+}
+
+db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').document('oaoQzhEc8daB7eFJzyeR').set(new_data) # create a new doc with auto gen key
+db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').get()

@@ -88,10 +88,11 @@ def remove(chart):
         return redirect(url_for('chart', chart_name=chart))
     return render_template('remove.html', form=form)
 
-@app.route('/chart/<chart_name>', methods=['GET', 'POST'])
+@app.route('/chart/<chart_id>', methods=['GET', 'POST'])
 @login_required
-def chart(chart_name):
-    chart_ref = db.collection(current_user.brand).document(chart_name).get() # get the chart object
+def chart(chart_id):
+    current_user.chart = chart_id
+    chart_ref = db.collection('charts').document(chart_id).get() # get the chart object
     chart = chart_ref.to_dict() # get it as dict
     stats = chart['stats']
     players = chart['players']
@@ -104,18 +105,28 @@ def chart(chart_name):
 @login_required
 def charts():
     brand = current_user.brand
-    charts = [chart.id for chart in db.collection(brand).get()]
-    if not charts:
+    charts = [(chart.id, chart.to_dict()['name']) for chart in db.collection('charts').where('brand', '==', brand).get()]
+    '''if not charts:
         create_chart(brand)
-        charts = [chart.id for chart in db.collection(brand).get()]
+        charts = [chart.id for chart in db.collection('charts').where('brand', '==', brand).get()]'''
+        # clean this up, the logic when someone doesn't have a chart
     return render_template('charts.html', charts=charts)
+
+@app.route('/chart/<chart_id>/events', methods=['GET', 'POST'])
+@login_required
+def events(chart_id):
+    brand = current_user.brand
+    print(current_user.brand)
+    events = [(event.id, event.to_dict()['name']) for event in db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').get()]
+    return render_template('events.html', events=events)
 
 def create_chart(brand):
     data = {
+        'brand' : brand,
         'stats': ['Category 1'],
         'players': ['1', '2', '3', '4', '5', '10', '11', '12', '15', '20'],
         }
-    db.collection(brand).document('First Chart').set(data) # get the chart object
+    db.collection(charts).document().set(data) # get the chart object
     return
 
 # initialize the firebase app
