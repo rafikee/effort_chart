@@ -4,13 +4,13 @@
   <table class="chartsList">
     <thead>
       <tr>
-        <th>Events</th>
+        <th>{{ data['chart_name'] }}</th>
       </tr>
     </thead>
     <tbody>
-      {% for event_id, event_name in events %}
+      {% for event_id, event_name in data['events'] %}
       <tr>
-        <td><a href="{{ url_for('events', event_id=event_id) }}">{{ event_name }}</a></td>
+        <td><a href="{{ url_for('chart', chart_id=data['chart'], event_id=event_id) }}">{{ event_name }}</a></td>
       </tr>
       {% endfor %}
     </tbody>

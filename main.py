@@ -7,6 +7,7 @@ import os
 from forms import StatsForm, StatsDD, LoginForm
 import flask_login
 from flask_login import current_user, login_user, LoginManager, UserMixin, login_required
+import pandas as pd
 
 # If `entrypoint` is not defined in app.yaml, App Engine will look for an app
 # called `app` in `main.py`.
@@ -91,15 +92,15 @@ def remove(chart):
 @app.route('/chart/<chart_id>', methods=['GET', 'POST'])
 @login_required
 def chart(chart_id):
-    current_user.chart = chart_id
-    chart_ref = db.collection('charts').document(chart_id).get() # get the chart object
-    chart = chart_ref.to_dict() # get it as dict
-    stats = chart['stats']
-    players = chart['players']
-    stats_print = []
-    for stat in stats:
-        stats_print.append(stat.replace(" ", "_"))
-    return render_template('chart.html', plyrs=players, stats=stats, stats_print=stats_print)
+    event_id = request.args['event_id']
+    data = db.collection('charts').document(chart_id).collection('stats').document(event_id).get().to_dict()['stats']
+    df = pd.DataFrame.from_dict(data, orient='index')
+    stats_names = list(df)
+    player_names = list(df.index.values)
+    players = []
+    for plyr in player_names:
+        players.append({'name': plyr, 'stats' : list(df.loc[plyr])})
+    return render_template('chart.html', plyrs=players, stats=stats_names)
 
 @app.route('/charts', methods=['GET', 'POST'])
 @login_required
@@ -115,10 +116,14 @@ def charts():
 @app.route('/chart/<chart_id>/events', methods=['GET', 'POST'])
 @login_required
 def events(chart_id):
-    brand = current_user.brand
-    print(current_user.brand)
-    events = [(event.id, event.to_dict()['name']) for event in db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').get()]
-    return render_template('events.html', events=events)
+    events = [(event.id, event.to_dict()['name']) for event in db.collection('charts').document(chart_id).collection('stats').get()]
+    chart_name = db.collection('charts').document(chart_id).get().to_dict()['name']
+    data = {
+        'chart' : chart_id,
+        'events' : events,
+        'chart_name' : chart_name,
+    }
+    return render_template('events.html', data=data)
 
 def create_chart(brand):
     data = {

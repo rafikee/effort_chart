@@ -35,8 +35,6 @@ charts = db.collection('charts')
 
 #charts = [(chart.id, chart.to_dict()['name']) for chart in db.collection('charts').where('brand', '==', brand).get()]
 
-charts.get()['']
-
 new_data = {
     'name': 'practice 1',
     'stats' :
@@ -46,5 +44,6 @@ new_data = {
     }
 }
 
-db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').document('oaoQzhEc8daB7eFJzyeR').set(new_data) # create a new doc with auto gen key
-db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').get()
+#db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').document('oaoQzhEc8daB7eFJzyeR').get().to_dict() # create a new doc with auto gen key
+#db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').get()
+db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').get().to_dict()['name']

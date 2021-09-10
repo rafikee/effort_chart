@@ -16,9 +16,9 @@
   <tbody>
     {% for plyr in plyrs %}
     <tr>
-      <td class="tg-plyr disable-select">{{ plyr }}</td>
-      {% for stat in stats_print %}
-      <td><button class="stat-button disable-select" id='{{ plyr }}{{ stat }}'>0</button></td>
+      <td class="tg-plyr disable-select">{{ plyr.name }}</td>
+      {% for stat in plyr.stats %}
+      <td><button class="stat-button disable-select">{{ stat }}</button></td>
       {% endfor %}
     </tr>
     {% endfor %}

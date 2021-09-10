@@ -10,7 +10,7 @@
     <tbody>
       {% for chart_id, chart_name in charts %}
       <tr>
-        <td><a href="{{ url_for('chart', chart_id=chart_id) }}">{{ chart_name }}</a></td>
+        <td><a href="{{ url_for('events', chart_id=chart_id) }}">{{ chart_name }}</a></td>
       </tr>
       {% endfor %}
     </tbody>
