@@ -8,6 +8,7 @@
 `. venv/bin/activate`
 5. Install the requirements
 `pip3 install -r requirements.txt`
+Note you may need to install one by one. pyrbase4 may work rather than pyrebase
 
 6. Add these lines to your bash_profile (adjust the path as needed):
 
@@ -15,7 +16,6 @@
 
 `export FLASK_ENV=development`
 
-`export FLASK_APP=$HOME/effort_chart/main.py`
 
 7. Exit the terminal and re-enter to apply the updated bash_profile.
 

@@ -93,14 +93,16 @@ def remove(chart):
 @login_required
 def chart(chart_id):
     event_id = request.args['event_id']
-    data = db.collection('charts').document(chart_id).collection('stats').document(event_id).get().to_dict()['stats']
+    data = db.collection('charts').document(chart_id).collection('stats').document(event_id).get().to_dict()
+    chart_name = data['name']
+    data = data['stats']
     df = pd.DataFrame.from_dict(data, orient='index')
-    stats_names = list(df)
+    categories = list(df)
     player_names = list(df.index.values)
     players = []
     for plyr in player_names:
         players.append({'name': plyr, 'stats' : list(df.loc[plyr])})
-    return render_template('chart.html', plyrs=players, stats=stats_names)
+    return render_template('chart.html', plyrs=players, categories=categories, chart_name=chart_name)
 
 @app.route('/charts', methods=['GET', 'POST'])
 @login_required
@@ -125,14 +127,13 @@ def events(chart_id):
     }
     return render_template('events.html', data=data)
 
-def create_chart(brand):
-    data = {
-        'brand' : brand,
-        'stats': ['Category 1'],
-        'players': ['1', '2', '3', '4', '5', '10', '11', '12', '15', '20'],
-        }
-    db.collection(charts).document().set(data) # get the chart object
-    return
+@app.route('/chart/<chart_id>/create_event', methods=['GET', 'POST'])
+@login_required
+def create_event(chart_id):
+    event_id = request.args['event_id']
+    data = db.collection('charts').document(chart_id).collection('stats').document(event_id).get().to_dict()
+    event_id = db.collection('charts').document(chart_id).collection('stats').add(data)[1].id
+    return redirect(url_for('chart', chart_id=chart_id, event_id=event_id))
 
 # initialize the firebase app
 def check_fire_db():

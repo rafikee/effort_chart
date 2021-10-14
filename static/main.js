@@ -83,6 +83,12 @@ $(document).ready(function() {
     localStorage.setItem('operationList',JSON.stringify(ops));
   });
 
+  // for editing the event name
+  $(document).on("click", 'a[href="#edit"]', function () {
+    // make the span editable and focus it
+    $(this).closest("li").find("span").prop("contenteditable", true).focus();
+    return false;
+  });
 });
 
 function addsub(btn, numb) {

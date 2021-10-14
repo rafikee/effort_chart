@@ -6,6 +6,9 @@
       <tr>
         <th>{{ data['chart_name'] }}</th>
       </tr>
+      <tr>
+        <td class="table-button"><a href="{{ url_for('create_event', chart_id=data['chart'], event_id=data['events'][0][0]) }}" style="text-decoration: none;">Add New Event</a></td>
+      </tr>
     </thead>
     <tbody>
       {% for event_id, event_name in data['events'] %}

@@ -7,9 +7,13 @@
 <table class="tg">
   <thead>
     <tr>
+      <th class="eventname">{{ chart_name }}</th>
+      <th class="edit">Edit</th>
+    </tr>
+    <tr>
       <th class="first-cell"></th>
-      {% for stat in stats %}
-      <th class="tg-stat disable-select">{{ stat }}</th>
+      {% for cat in categories %}
+      <th class="tg-stat disable-select">{{ cat }}</th>
       {% endfor %}
     </tr>
   </thead>

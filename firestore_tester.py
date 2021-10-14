@@ -26,9 +26,8 @@ def check_fire_db():
 check_fire_db() # initialize the firebase app
 db = firestore.client() # get the db objects
 
-# data = db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').get().to_dict() # get dictionary from document
-# data = db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').document('oaoQzhEc8daB7eFJzyeR').get().to_dict() # get dictionary from document
-
+data = db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').document('KJFuANP1Hrxpl1ShUtoA').get().to_dict() # get dictionary from document
+db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').add(data)
 charts = db.collection('charts')
 #q = charts.where('brand', '==', 'vcu').get()
 
@@ -43,7 +42,3 @@ new_data = {
         'Rob': {'Steal': 4, 'Deflection': 3, 'Rebound': 2}
     }
 }
-
-#db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').document('oaoQzhEc8daB7eFJzyeR').get().to_dict() # create a new doc with auto gen key
-#db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').collection('stats').get()
-db.collection('charts').document('EGycXeh60lfXSGlYjC5Q').get().to_dict()['name']
