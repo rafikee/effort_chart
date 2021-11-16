@@ -4,12 +4,12 @@
 <button class='toolBtn' id='undo'>&#10226</button>
 {% endblock %}
 {% block content %}
+<div>
+  <span class="eventname" contenteditable="true" id=idContentEditable>{{ event_name }}</span>
+  <!--<img class="edit" src="/static/edit.png">--->
+</div>
 <table class="tg">
   <thead>
-    <tr>
-      <th class="eventname">{{ chart_name }}</th>
-      <th class="edit">Edit</th>
-    </tr>
     <tr>
       <th class="first-cell"></th>
       {% for cat in categories %}

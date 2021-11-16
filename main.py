@@ -92,9 +92,13 @@ def remove(chart):
 @app.route('/chart/<chart_id>', methods=['GET', 'POST'])
 @login_required
 def chart(chart_id):
+    # for updating the chart name
+    if request.method == 'POST':
+        print(request.get_json())
+        return "nothing"
     event_id = request.args['event_id']
     data = db.collection('charts').document(chart_id).collection('stats').document(event_id).get().to_dict()
-    chart_name = data['name']
+    event_name = data['name']
     data = data['stats']
     df = pd.DataFrame.from_dict(data, orient='index')
     categories = list(df)
@@ -102,7 +106,7 @@ def chart(chart_id):
     players = []
     for plyr in player_names:
         players.append({'name': plyr, 'stats' : list(df.loc[plyr])})
-    return render_template('chart.html', plyrs=players, categories=categories, chart_name=chart_name)
+    return render_template('chart.html', plyrs=players, categories=categories, event_name=event_name)
 
 @app.route('/charts', methods=['GET', 'POST'])
 @login_required

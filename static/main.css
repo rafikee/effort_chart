@@ -1,8 +1,8 @@
 table
 {
-    table-layout: fixed;
-    width: 100%;
-    background-color: #f8f7ff;
+  table-layout: fixed;
+  width: 100%;
+  background-color: #f8f7ff;
 }
 
 .chartsList{
@@ -10,16 +10,18 @@ table
   font-size: 30px;
   padding: 20px;
 }
+
 .container{
   width: 600px;
 }
+
 .disable-select {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none;   /* Chrome/Safari/Opera */
-    -khtml-user-select: none;    /* Konqueror */
-    -moz-user-select: none;      /* Firefox */
-    -ms-user-select: none;       /* Internet Explorer/Edge */
-    user-select: none;           /* Non-prefixed version, currently supported by any browser but < IE9 */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently supported by any browser but < IE9 */
 }
 
 .tg {
@@ -122,17 +124,15 @@ table
   color: white;
 }
 
-.tg .eventname {
-  font-size: 20px;
+.eventname {
+  font-size: 24px;
   color: white;
   background-color: #808080;
 }
 
-.tg .edit {
-  font-size: 15px;
-  color: white;
-  background-color: black;
-  border-radius: 50%;
+/*not being using right now, was for the pencil edit*/
+.edit {
+  width: 3%;
 }
 
 .table-button a {

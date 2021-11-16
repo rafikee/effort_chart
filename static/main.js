@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   //reset the undo array
   localStorage.removeItem('actionsList')
   localStorage.removeItem('operationList')
@@ -84,10 +83,9 @@ $(document).ready(function() {
   });
 
   // for editing the event name
-  $(document).on("click", 'a[href="#edit"]', function () {
-    // make the span editable and focus it
-    $(this).closest("li").find("span").prop("contenteditable", true).focus();
-    return false;
+  $("#idContentEditable").keypress(function(e){
+    $.post($(location).attr('href'), {"myData": $(this).text()})
+    return e.which != 13;
   });
 });
 
